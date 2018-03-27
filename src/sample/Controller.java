@@ -1,6 +1,7 @@
 package sample;
 
-import javafx.event.ActionEvent;
+import AStar.Edge;
+import AStar.Node;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -9,11 +10,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
+
 //import java.awt.*;
 
 public class Controller {
     private boolean firstSelect = true;
-    private boolean secondSelect = false;
+    private boolean secondSelect = true;
     private Node startNode;
     private Node endNode;
 
@@ -21,6 +24,42 @@ public class Controller {
     private Canvas testCanvas;
     private Button goButton;
     private Label label;
+
+    private static Node Node01 = new Node(50.0,50.0);
+    private static Node Node02 = new Node(100.0, 50.0);
+    private static Node Node03 = new Node(150.0, 100.0);
+    private static Node Node04 = new Node(50.0, 250.0);
+    private static Node Node05 = new Node(250.0, 150.0);
+    private static Node Node06 = new Node(500.0, 100.0);
+    private static Node Node07 = new Node(400.0, 200.0);
+    private static Node Node08 = new Node(350.0, 300.0);
+    private static Node Node09 = new Node(300.0, 450.0);
+    private static Node Node10 = new Node(450.0, 400.0);
+    private static Edge Edge0102 = new Edge(Node01, Node02);
+    private static Edge Edge0104 = new Edge(Node01, Node04);
+    private static Edge Edge0203 = new Edge(Node02, Node03);
+    private static Edge Edge0304 = new Edge(Node03, Node04);
+    private static Edge Edge0305 = new Edge(Node03, Node04);
+    private static Edge Edge0309 = new Edge(Node03, Node09);
+    private static Edge Edge0409 = new Edge(Node04, Node09);
+    private static Edge Edge0506 = new Edge(Node05, Node06);
+    private static Edge Edge0508 = new Edge(Node05, Node08);
+    private static Edge Edge0607 = new Edge(Node06, Node07);
+    private static Edge Edge0610 = new Edge(Node06, Node10);
+    private static Edge Edge0708 = new Edge(Node07, Node08);
+    private static Edge Edge0809 = new Edge(Node08, Node09);
+    private static Edge Edge0910 = new Edge(Node09, Node10);
+
+    static ArrayList<Edge> edgelist01 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist02 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist03 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist04 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist05 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist06 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist07 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist08 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist09 = new ArrayList<Edge>();
+    static ArrayList<Edge> edgelist10 = new ArrayList<Edge>();
 
     @FXML
     private Circle node01;
@@ -94,15 +133,83 @@ public class Controller {
     @FXML
     private Line edge0910;
 
+    public void setEdgeLists() {
+        edgelist01.add(Edge0102);
+        edgelist01.add(Edge0104);
+        edgelist02.add(Edge0102);
+        edgelist02.add(Edge0203);
+        edgelist03.add(Edge0203);
+        edgelist03.add(Edge0304);
+        edgelist03.add(Edge0305);
+        edgelist03.add(Edge0309);
+        edgelist04.add(Edge0304);
+        edgelist04.add(Edge0409);
+        edgelist04.add(Edge0104);
+        edgelist05.add(Edge0305);
+        edgelist05.add(Edge0506);
+        edgelist05.add(Edge0508);
+        edgelist06.add(Edge0506);
+        edgelist06.add(Edge0607);
+        edgelist06.add(Edge0610);
+        edgelist07.add(Edge0607);
+        edgelist07.add(Edge0708);
+        edgelist08.add(Edge0508);
+        edgelist08.add(Edge0708);
+        edgelist08.add(Edge0809);
+        edgelist09.add(Edge0309);
+        edgelist09.add(Edge0409);
+        edgelist09.add(Edge0809);
+        edgelist10.add(Edge0610);
+        edgelist10.add(Edge0910);
+
+        Node01.addEdges(edgelist01);
+        Node02.addEdges(edgelist02);
+        Node03.addEdges(edgelist03);
+        Node04.addEdges(edgelist04);
+        Node05.addEdges(edgelist05);
+        Node06.addEdges(edgelist06);
+        Node07.addEdges(edgelist07);
+        Node08.addEdges(edgelist08);
+        Node09.addEdges(edgelist09);
+        Node10.addEdges(edgelist10);
+
+        Node01.setID("Node 1");
+        Node02.setID("Node 2");
+        Node03.setID("Node 3");
+        Node04.setID("Node 4");
+        Node05.setID("Node 5");
+        Node06.setID("Node 6");
+        Node07.setID("Node 7");
+        Node08.setID("Node 8");
+        Node09.setID("Node 9");
+        Node10.setID("Node 10");
+
+        Edge0102.setID("Edge 1-2");
+        Edge0104.setID("Edge 1-4");
+        Edge0203.setID("Edge 2-3");
+        Edge0304.setID("Edge 3-4");
+        Edge0305.setID("Edge 3-5");
+        Edge0309.setID("Edge 3-9");
+        Edge0409.setID("Edge 4-9");
+        Edge0506.setID("Edge 5-6");
+        Edge0508.setID("Edge 5-8");
+        Edge0607.setID("Edge 6-7");
+        Edge0610.setID("Edge 6-10");
+        Edge0708.setID("Edge 7-8");
+        Edge0809.setID("Edge 8-9");
+        Edge0910.setID("Edge 9-10");
+    }
+
     @FXML
     public void setNode01() {
         if (firstSelect) {
             firstSelect = false;
             node01.setFill(Color.rgb(35, 205, 0, .99));
-            startNode = new Node(((int) node01.getCenterX()), (int) node01.getCenterY());
+            startNode = Node01;
         } else if (secondSelect) {
             secondSelect = false;
             node01.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node01;
         }
     }
 
@@ -111,9 +218,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node02.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node02;
         } else if (secondSelect) {
             secondSelect = false;
             node02.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node02;
         }
     }
 
@@ -122,9 +231,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node03.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node03;
         } else if (secondSelect) {
             secondSelect = false;
             node03.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node03;
         }
     }
 
@@ -133,9 +244,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node04.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node04;
         } else if (secondSelect) {
             secondSelect = false;
             node04.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node04;
         }
     }
 
@@ -144,9 +257,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node05.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node05;
         } else if (secondSelect) {
             secondSelect = false;
             node05.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node05;
         }
     }
 
@@ -155,9 +270,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node06.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node06;
         } else if (secondSelect) {
             secondSelect = false;
             node06.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node06;
         }
     }
 
@@ -166,9 +283,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node07.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node07;
         } else if (secondSelect) {
             secondSelect = false;
             node07.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node07;
         }
     }
 
@@ -177,9 +296,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node08.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node08;
         } else if (secondSelect) {
             secondSelect = false;
             node08.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node08;
         }
     }
 
@@ -188,9 +309,11 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node09.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node09;
         } else if (secondSelect) {
             secondSelect = false;
             node09.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node09;
         }
     }
 
@@ -199,14 +322,17 @@ public class Controller {
         if (firstSelect) {
             firstSelect = false;
             node10.setFill(Color.rgb(35, 205, 0, .99));
+            startNode = Node10;
         } else if (secondSelect) {
             secondSelect = false;
             node10.setFill(Color.rgb(205, 35, 0, 0.99));
+            endNode = Node10;
         }
     }
 
     @FXML
     public void goButtonPressed() {
-        firstSelect = true;
+        setEdgeLists();
+        System.out.println(startNode.AStar(endNode).toString());
     }
 }
