@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <GridPane prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="500.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="goButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#goButtonPressed" prefWidth="150.0" text="Go" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label text="Calculate path" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Line fx:id="edge0102" endX="100.0" endY="50.0" startX="50.0" startY="50.0" />
+      <Line fx:id="edge0203" endX="150.0" endY="100.0" startX="100.0" startY="50.0" />
+      <Line fx:id="edge0104" endX="50.0" endY="250.0" startX="50.0" startY="50.0" />
+      <Line fx:id="edge00309" endX="300.0" endY="450.0" startX="150.0" startY="100.0" />
+      <Line fx:id="edge0409" endX="300.0" endY="450.0" startX="50.0" startY="250.0" />
+      <Line fx:id="edge0304" endX="50.0" endY="250.0" startX="150.0" startY="100.0" />
+      <Line fx:id="edge0506" endX="500.0" endY="100.0" startX="250.0" startY="150.0" />
+      <Line fx:id="edge0305" endX="250.0" endY="150.0" startX="150.0" startY="100.0" />
+      <Line fx:id="edge0508" endX="350.0" endY="300.0" startX="250.0" startY="150.0" />
+      <Line fx:id="edge0809" endX="350.0" endY="300.0" startX="300.0" startY="450.0" />
+      <Line fx:id="edge0910" endX="450.0" endY="400.0" startX="300.0" startY="450.0" />
+      <Line fx:id="edge0708" endX="350.0" endY="300.0" startX="400.0" startY="200.0" />
+      <Line fx:id="edge0610" endX="500.0" endY="100.0" startX="450.0" startY="400.0" />
+      <Line fx:id="edge0607" endX="500.0" endY="100.0" startX="400.0" startY="200.0" />
+      <Circle fx:id="node01" centerX="50.0" centerY="50.0" fill="DODGERBLUE" onMouseClicked="#setNode01" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node02" centerX="100.0" centerY="50.0" fill="DODGERBLUE" onMouseClicked="#setNode02" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node03" centerX="150.0" centerY="100.0" fill="DODGERBLUE" onMouseClicked="#setNode03" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node04" centerX="50.0" centerY="250.0" fill="DODGERBLUE" onMouseClicked="#setNode04" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node09" centerX="300.0" centerY="450.0" fill="DODGERBLUE" onMouseClicked="#setNode09" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node05" centerX="250.0" centerY="150.0" fill="DODGERBLUE" onMouseClicked="#setNode05" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node06" centerX="500.0" centerY="100.0" fill="DODGERBLUE" onMouseClicked="#setNode06" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node08" centerX="350.0" centerY="300.0" fill="DODGERBLUE" onMouseClicked="#setNode08" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node10" centerX="450.0" centerY="400.0" fill="DODGERBLUE" onMouseClicked="#setNode10" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="node07" centerX="400.0" centerY="200.0" fill="DODGERBLUE" onMouseClicked="#setNode07" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label layoutX="463.0" layoutY="395.0" text="node10" />
+      <Label layoutX="510.0" layoutY="90.0" text="node06" />
+      <Label layoutX="428.0" layoutY="190.0" text="node07" />
+      <Label layoutX="371.0" layoutY="289.0" text="node08" />
+      <Label layoutX="75.0" layoutY="239.0" text="node04" />
+      <Label layoutX="320.0" layoutY="445.0" text="node09" />
+      <Label layoutX="249.0" layoutY="115.0" text="node05" />
+      <Label layoutX="30.0" layoutY="20.0" text="node01" />
+      <Label layoutX="125.0" layoutY="45.0" text="node02" />
+      <Label layoutX="93.0" layoutY="90.0" text="node03" />
+   </children>
+</AnchorPane>
