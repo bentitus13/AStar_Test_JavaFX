@@ -11,6 +11,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 //import java.awt.*;
 
@@ -39,7 +42,7 @@ public class Controller {
     private static Edge Edge0104 = new Edge(Node01, Node04);
     private static Edge Edge0203 = new Edge(Node02, Node03);
     private static Edge Edge0304 = new Edge(Node03, Node04);
-    private static Edge Edge0305 = new Edge(Node03, Node04);
+    private static Edge Edge0305 = new Edge(Node03, Node05);
     private static Edge Edge0309 = new Edge(Node03, Node09);
     private static Edge Edge0409 = new Edge(Node04, Node09);
     private static Edge Edge0506 = new Edge(Node05, Node06);
@@ -60,6 +63,12 @@ public class Controller {
     static ArrayList<Edge> edgelist08 = new ArrayList<Edge>();
     static ArrayList<Edge> edgelist09 = new ArrayList<Edge>();
     static ArrayList<Edge> edgelist10 = new ArrayList<Edge>();
+
+    HashMap<String, Node> nodeSet = new HashMap<String, Node>();
+    HashMap<String, Edge> edgeSet = new HashMap<String, Edge>();
+
+    HashMap<String, Circle> nodeDispSet = new HashMap<String, Circle>();
+    HashMap<String, Line> edgeDispSet = new HashMap<String, Line>();
 
     @FXML
     private Circle node01;
@@ -107,7 +116,7 @@ public class Controller {
     private Line edge0305;
 
     @FXML
-    private Line edge00309;
+    private Line edge0309;
 
     @FXML
     private Line edge0409;
@@ -159,6 +168,7 @@ public class Controller {
         edgelist09.add(Edge0309);
         edgelist09.add(Edge0409);
         edgelist09.add(Edge0809);
+        edgelist09.add(Edge0910);
         edgelist10.add(Edge0610);
         edgelist10.add(Edge0910);
 
@@ -198,6 +208,61 @@ public class Controller {
         Edge0708.setID("Edge 7-8");
         Edge0809.setID("Edge 8-9");
         Edge0910.setID("Edge 9-10");
+    }
+
+    public void setHashSets() {
+        nodeSet.put(Node01.getID(), Node01);
+        nodeSet.put(Node02.getID(), Node02);
+        nodeSet.put(Node03.getID(), Node03);
+        nodeSet.put(Node04.getID(), Node04);
+        nodeSet.put(Node05.getID(), Node05);
+        nodeSet.put(Node06.getID(), Node06);
+        nodeSet.put(Node07.getID(), Node07);
+        nodeSet.put(Node08.getID(), Node08);
+        nodeSet.put(Node09.getID(), Node09);
+        nodeSet.put(Node10.getID(), Node10);
+
+        edgeSet.put(Edge0102.getID(), Edge0102);
+        edgeSet.put(Edge0104.getID(), Edge0104);
+        edgeSet.put(Edge0203.getID(), Edge0203);
+        edgeSet.put(Edge0304.getID(), Edge0304);
+        edgeSet.put(Edge0305.getID(), Edge0305);
+        edgeSet.put(Edge0309.getID(), Edge0309);
+        edgeSet.put(Edge0409.getID(), Edge0409);
+        edgeSet.put(Edge0506.getID(), Edge0506);
+        edgeSet.put(Edge0508.getID(), Edge0508);
+        edgeSet.put(Edge0607.getID(), Edge0607);
+        edgeSet.put(Edge0610.getID(), Edge0610);
+        edgeSet.put(Edge0708.getID(), Edge0708);
+        edgeSet.put(Edge0809.getID(), Edge0809);
+        edgeSet.put(Edge0910.getID(), Edge0910);
+
+
+        nodeDispSet.put(Node01.getID(), node01);
+        nodeDispSet.put(Node02.getID(), node02);
+        nodeDispSet.put(Node03.getID(), node03);
+        nodeDispSet.put(Node04.getID(), node04);
+        nodeDispSet.put(Node05.getID(), node05);
+        nodeDispSet.put(Node06.getID(), node06);
+        nodeDispSet.put(Node07.getID(), node07);
+        nodeDispSet.put(Node08.getID(), node08);
+        nodeDispSet.put(Node09.getID(), node09);
+        nodeDispSet.put(Node10.getID(), node10);
+
+        edgeDispSet.put(Edge0102.getID(), edge0102);
+        edgeDispSet.put(Edge0104.getID(), edge0104);
+        edgeDispSet.put(Edge0203.getID(), edge0203);
+        edgeDispSet.put(Edge0304.getID(), edge0304);
+        edgeDispSet.put(Edge0305.getID(), edge0305);
+        edgeDispSet.put(Edge0309.getID(), edge0309);
+        edgeDispSet.put(Edge0409.getID(), edge0409);
+        edgeDispSet.put(Edge0506.getID(), edge0506);
+        edgeDispSet.put(Edge0508.getID(), edge0508);
+        edgeDispSet.put(Edge0607.getID(), edge0607);
+        edgeDispSet.put(Edge0610.getID(), edge0610);
+        edgeDispSet.put(Edge0708.getID(), edge0708);
+        edgeDispSet.put(Edge0809.getID(), edge0809);
+        edgeDispSet.put(Edge0910.getID(), edge0910);
     }
 
     @FXML
@@ -333,6 +398,36 @@ public class Controller {
     @FXML
     public void goButtonPressed() {
         setEdgeLists();
-        System.out.println(startNode.AStar(endNode).toString());
+        setHashSets();
+        ArrayList<Node> path = startNode.AStar(endNode);
+//        System.out.println("Final path: " + path.toString());
+        Node currentNode = null, pastNode = null;
+        Iterator<Node> i = path.iterator(); i.hasNext();
+        currentNode = i.next();
+//        System.out.println("Current Node: " + currentNode.toString());
+        Circle waypoint = nodeDispSet.get(currentNode.getID());
+        waypoint.setFill(Color.rgb(250, 150, 0));
+//        System.out.println("Edges on current node: " + currentNode.getEdges().toString());
+        while (i.hasNext()) {
+            pastNode = currentNode;
+            currentNode = i.next();
+//            System.out.println("Current Node: " + currentNode.toString());
+//            System.out.println("Previous Node: " + pastNode.toString());
+            waypoint = nodeDispSet.get(currentNode.getID());
+            waypoint.setFill(Color.rgb(250, 150, 0));
+//            System.out.println("Edges on current node: " + currentNode.getEdges().toString());
+            for (Iterator<Edge> j = currentNode.getEdges().iterator(); j.hasNext(); ) {
+//                System.out.println("iterator j next element: " + j.hasNext());
+                Edge currentEdge = j.next();
+//                System.out.println("Current Edge: " + currentEdge.toString());
+                if (currentEdge.contains(pastNode)) {
+//                    System.out.println("We got a hit!" + currentEdge.toString());
+                    Line line = edgeDispSet.get(currentEdge.getID());
+                    line.setStroke(Color.rgb(250, 150, 0));
+                    line.setStrokeWidth(2.0);
+                }
+            }
+        }
+        System.out.println("All done!");
     }
 }

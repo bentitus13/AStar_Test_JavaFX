@@ -33,6 +33,16 @@ public class Edge {
         this.id = id;
     }
 
+    public boolean contains(Node n) {
+        if (this.node1.equals(n)) {
+            return true;
+        }
+        if (this.node2.equals(n)) {
+            return true;
+        }
+        return false;
+    }
+
     public Edge(Node node1, Node node2) {
         this.id = id;
 
