@@ -402,29 +402,28 @@ public class Controller {
         ArrayList<Node> path = startNode.AStar(endNode);
 //        System.out.println("Final path: " + path.toString());
         Node currentNode = null, pastNode = null;
-        Iterator<Node> i = path.iterator(); i.hasNext();
-        currentNode = i.next();
 //        System.out.println("Current Node: " + currentNode.toString());
-        Circle waypoint = nodeDispSet.get(currentNode.getID());
-        waypoint.setFill(Color.rgb(250, 150, 0));
+        Circle waypoint;
+        Line line;
 //        System.out.println("Edges on current node: " + currentNode.getEdges().toString());
-        while (i.hasNext()) {
+        for (Node n : path) {
             pastNode = currentNode;
-            currentNode = i.next();
+            currentNode = n;
 //            System.out.println("Current Node: " + currentNode.toString());
 //            System.out.println("Previous Node: " + pastNode.toString());
             waypoint = nodeDispSet.get(currentNode.getID());
             waypoint.setFill(Color.rgb(250, 150, 0));
 //            System.out.println("Edges on current node: " + currentNode.getEdges().toString());
-            for (Iterator<Edge> j = currentNode.getEdges().iterator(); j.hasNext(); ) {
+            for (Edge e : currentNode.getEdges()) {
 //                System.out.println("iterator j next element: " + j.hasNext());
-                Edge currentEdge = j.next();
 //                System.out.println("Current Edge: " + currentEdge.toString());
-                if (currentEdge.contains(pastNode)) {
-//                    System.out.println("We got a hit!" + currentEdge.toString());
-                    Line line = edgeDispSet.get(currentEdge.getID());
-                    line.setStroke(Color.rgb(250, 150, 0));
-                    line.setStrokeWidth(2.0);
+                if (pastNode != null) {
+                    if (e.contains(pastNode)) {
+//                        System.out.println("We got a hit!" + currentEdge.toString());
+                        line = edgeDispSet.get(e.getID());
+                        line.setStroke(Color.rgb(250, 150, 0));
+                        line.setStrokeWidth(2.0);
+                    }
                 }
             }
         }
