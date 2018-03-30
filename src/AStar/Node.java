@@ -175,6 +175,11 @@ public class Node {
 
         this.parent = null;
 
+        // Unexplored node with shortest distance to goal
+        // Initialize to first item in openSet
+        // (if only 1 item then it is the shortest to goal)
+        Node currentNode = this;
+
         // Start searching
         while (!openSet.isEmpty()) {
 //            System.out.println("Starting iteration on new Node <--------------------------------------------------------------");
@@ -184,28 +189,16 @@ public class Node {
 
 //            System.out.println("getting next iterator for openset");
 
-            // open set iterator for parsing the openset
-            Iterator<Node> openIterator = openSet.iterator();
-
-            // Temporary node to find lowest fScore node
-            Node n = openIterator.next();
-
-            // Unexplored node with shortest distance to goal
-            // Initialize to first item in openSet
-            // (if only 1 item then it is the shortest to goal)
-            Node currentNode = n;
-
 //            System.out.println("finding new node to explore");
             // Get item in openSet that has smallest
-            while(openIterator.hasNext()) {
+            for (Node tempNode : openSet) {
 //                System.out.println("iterating through openSet");
 //                System.out.println("currently iterating through: " + n.toString());
-                if (fScore.get(n.getID()) < tempFScore) {
+                if (fScore.get(tempNode.getID()) < tempFScore) {
 //                    System.out.println("Found possible node to explore: " + fScore.get(n.getID()) + " less than: " + tempFScore);
-                    tempFScore = fScore.get(n.getID());
-                    currentNode = n;
+                    tempFScore = fScore.get(tempNode.getID());
+                    currentNode = tempNode;
                 }
-                n = openIterator.next();
             }
 //            System.out.println("openSet: " + openSet);
             openSet.remove(currentNode);
@@ -222,13 +215,11 @@ public class Node {
             }
 
             // Add neighbors to openSet
-            for (Iterator<Edge> i = currentNode.getEdges().iterator(); i.hasNext(); ) {
+            for (Edge e: currentNode.getEdges()) {
                 // Temporary variable for comparing gScores
                 Double tempGScore = 0.0;
 
 //                System.out.println("Adding new neighbor! <---------------------------------");
-
-                Edge e = i.next();
 
                 // Set neighbor to the node in edge that is not current node
                 Node neighbor;
@@ -246,7 +237,7 @@ public class Node {
 //                    System.out.println("Distance between current node and neighbor: " + currentNode.distanceBetweenNodes(neighbor));
 
                     // Add neighbor gScore value to gScore
-                    tempGScore = gScore.get(currentNode.getID()) + currentNode.distanceBetweenNodes(neighbor);
+                    tempGScore = gScore.get(currentNode.getID()) + e.getWeight();// currentNode.distanceBetweenNodes(neighbor);
 
                     if (!gScore.containsKey(neighbor.getID())) {
 //                        System.out.println("setting parent");
@@ -262,7 +253,7 @@ public class Node {
                         gScore.put(neighbor.getID(), tempGScore);
 
                         // Calculate tempFScore for readability
-                        tempFScore = gScore.get(neighbor.getID()) + neighbor.distanceBetweenNodes(destNode);
+                        tempFScore = gScore.get(neighbor.getID()) + destNode.distanceBetweenNodes(neighbor);
 //                        System.out.println("tempFScore: " + tempFScore);
 //
 //                        System.out.println("Setting fScore");
@@ -270,15 +261,13 @@ public class Node {
                         fScore.put(neighbor.getID(), tempFScore);
                     }
 //                    System.out.println("adding neighbor");
-                }
 
-                if (!closedSet.contains(neighbor)) {
                     // Add neighbor nodes with weights to the openSet
                     openSet.add(neighbor);
                 }
-//                System.out.println("fScore: " + fScore);
-//                System.out.println("gScore: " + gScore);
             }
+//            System.out.println("fScore: " + fScore);
+//            System.out.println("gScore: " + gScore);
         }
 
         System.out.println("Path not found!");
